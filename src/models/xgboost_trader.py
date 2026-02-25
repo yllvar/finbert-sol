@@ -136,23 +136,26 @@ class XGBoostTrader:
             try:
                 importance_scores = self.model.get_booster().get_score(importance_type=imp_type)
                 
-                # Convert to DataFrame with proper feature names
-                importance_df = pd.DataFrame([
-                    {'feature': f'f{int(k)}', 'importance': v} 
-                    for k, v in importance_scores.items()
-                ])
+                rows = []
+                for k, v in importance_scores.items():
+                    # Check if k is something like 'f0' or already a feature name
+                    if k.startswith('f') and k[1:].isdigit():
+                        idx = int(k[1:])
+                        name = feature_names[idx] if idx < len(feature_names) else k
+                    else:
+                        name = k
+                    rows.append({'feature_name': name, 'importance': v})
                 
-                # Map feature indices to names
-                importance_df['feature_name'] = importance_df['feature'].map(
-                    lambda x: feature_names[int(x[1:])] if x[1:].isdigit() and int(x[1:]) < len(feature_names) else x
-                )
+                importance_df = pd.DataFrame(rows)
                 
                 # Sort by importance
-                importance_df = importance_df.sort_values('importance', ascending=False)
+                if not importance_df.empty:
+                    importance_df = importance_df.sort_values('importance', ascending=False)
                 self.feature_importance[imp_type] = importance_df
                 
             except Exception as e:
                 print(f"⚠️  Could not calculate {imp_type} importance: {e}")
+
     
     def predict(self, X: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray]:
         """

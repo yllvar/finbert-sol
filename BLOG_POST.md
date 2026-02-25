@@ -40,15 +40,32 @@ We built a **24GB Lakehouse** of data. It is the reliable "home-cooked meal" tha
 
 The result is a system that mirrors the discipline I saw at that blessing. It is a system that understands that the greatest strength is not the power to act, but the power to refrain.
 
-### The Final Reflection
+### The Final Reflection: Building the Sentinel
 
-In the `src/` directory of this project, you will find code that is blunt, efficient, and utterly devoid of sentimentality. The `XGBoostTrader` follows the 200-estimator command with the unwavering focus of a pilgrim. The `FinBERT` sentiment analysis stands guard, a sentinel against the noise of the world.
+Transitioning from a research paper to a production system on Hyperliquid taught us a humbling lesson: **Alpha is not found in the signals you catch, but in the noise you ignore.**
 
-We have learned that to find alpha in the crypto market, you must first find the discipline to ignore it. You must build a system that respects the rules more than the rewards.
+When we rebuilt the model from *arXiv:2601.19504v1*, our initial goal was "perfect" prediction. We tested 70+ order flow features—everything from depth imbalance to trade toxicity. But the raw XGBoost baseline, while accurate (~62.1%), was still vulnerable to the extreme volatility of the SOL/USD perpetual markets. It was susceptible to the *Nafsu* of the crowd.
+
+#### What We Observed
+In our multi-step simulations—which you can run yourself via `scripts/run_system_demo.py`—the breakthrough wasn't a better weight for a moving average. It was the interaction between the **Market Regime Detector** and the **FinBERT Sentiment Filter**. 
+
+During the "toxic" spikes we saw in late February—market events that mirrored the frustration of the Malaysian bazaars—the sentiment score plummeted below -0.7. In the code, this triggered a complete trading halt. While a simple buy-and-hold strategy suffered through sharp drawdowns during these periods, the Hybrid System simply stayed in cash. It refused to feast on bad data.
+
+#### What Discipline Means in Code
+In the `src/` directory, discipline isn't a vague feeling; it's a hard-coded constraint. It lives in the logic of our `TradingBot`:
+```python
+if pred == 1 and regime == 1 and sentiment_score > -0.7:
+    # Check Risk and Execute
+    action = "BUY"
+```
+This is the "Fast" in algorithmic form. It is the refusal to participate in the madness. It is the system respecting the rules more than the potential rewards.
+
+#### A Shift in Perspective
+I started this project thinking I was building a "great" trading architecture. I ended it realizing I was building a sentinel. True discipline in trading isn't about the courage to click "Buy"; it's about the emotional distance required to build a system that can click "Hold" while the rest of the world is panicking. 
+
+We have learned that to find alpha in the crypto market, you must first find the discipline to ignore it. 
 
 May your data be pure. May your logic be sound. And may your system have the strength to stay the hand when the world goes mad.
-
-This is the greatest trading architecture... in the world.
 
 ---
 

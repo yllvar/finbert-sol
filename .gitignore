@@ -8,3 +8,8 @@ hyper-deeplearn_backup_*
 *.parquet
 **/__pycache__/
 .env
+docs/
+visualizations/
+*.png
+*.txt
+*.json
