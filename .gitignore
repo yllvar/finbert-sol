@@ -1,0 +1,10 @@
+lakehouse/
+venv/
+data/
+logs/
+.pytest_cache/
+.DS_Store
+hyper-deeplearn_backup_*
+*.parquet
+**/__pycache__/
+.env

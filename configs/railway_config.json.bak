@@ -1,0 +1,23 @@
+{
+  "config_name": "V11.1 Absolute Integrity",
+  "description": "V11: Bit-Perfect Features / Zero Pipeline Suffixes / Standardized Regimes",
+  "model_path": "models/model_v13_1_robust.pkl",
+  "initial_capital": 100.0,
+  "duration_days": 30,
+  "threshold": 0.72,
+  "default_threshold": 0.72,
+  "tp_atr": 2.5,
+  "sl_atr": 1.5,
+  "max_sl_pct": 2.0,
+  "min_tp_pct": 1.5,
+  "position_size_pct": 1.0,
+  "kelly_multiplier": 3.0,
+  "leverage_cap": 5.0,
+  "max_daily_trades": 50,
+  "horizon_hrs": 4.0,
+  "poll_interval_seconds": 5,
+  "daily_dd_alert": 0.05,
+  "max_dd_alert": 0.15,
+  "emergency_dd": 0.25,
+  "db_path": "data/paper_trading_railway.db"
+}

@@ -1,0 +1,10 @@
+{
+  "threshold": {
+    "long": 0.71,
+    "short": 0.73
+  },
+  "atr_tp": 3.56,
+  "atr_sl": 2.39,
+  "horizon_ticks": 2880,
+  "horizon_hrs": 4.0
+}
